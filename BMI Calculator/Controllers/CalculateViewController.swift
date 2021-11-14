@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  BMI Calculator
-//
-//  Created by Angela Yu on 21/08/2019.
-//  Copyright © 2019 Angela Yu. All rights reserved.
-//
-
 import UIKit
 
 class CalculateViewController: UIViewController {
@@ -16,9 +8,9 @@ class CalculateViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 
+    var calculatorModel = CalculatorModel()
 
     @IBAction func heightSliderChanged(_ sender: UISlider) {
         heightOutput.text = "\(String(round(sender.value * 100)/100)) m"
@@ -34,14 +26,19 @@ class CalculateViewController: UIViewController {
         let height = heightSlider.value // m
         let weight = weightSlider.value // kg
         
-        let bmi = weight / pow(height, 2)
-        print(bmi)
+        calculatorModel.calculateBMI(height: height, weight: weight)
         
-        let secondVC = SecondViewController()
-        secondVC.bmiValue = String(format: "%.1f", bmi)
-        
-        self.present(secondVC, animated: true, completion: nil)
+        self.performSegue(withIdentifier: "goToResult", sender: self)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "goToResult"){
+            let destinationVC = segue.destination as! ResultsViewController
+            
+            destinationVC.bmiValue = calculatorModel.getBMIValue()
+            destinationVC.advice = calculatorModel.getAdvice()
+            destinationVC.colour = calculatorModel.getColour()
+        }
+    }
 }
 

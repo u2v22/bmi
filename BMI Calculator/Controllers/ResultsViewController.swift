@@ -1,30 +1,23 @@
-//
-//  ResultsViewController.swift
-//  BMI Calculator
-//
-//  Created by Veronica Wajda on 2021-11-13.
-//  Copyright © 2021 Angela Yu. All rights reserved.
-//
-
 import UIKit
 
 class ResultsViewController: UIViewController {
+    
+    var bmiValue: String?
+    var colour: UIColor?
+    var advice: String?
+
+    @IBOutlet weak var bmiLabel: UILabel!
+    @IBOutlet weak var adviceLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        bmiLabel.text = bmiValue
+        view.backgroundColor = colour
+        adviceLabel.text = advice
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func recalculate(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
     }
-    */
-
 }
